@@ -51,7 +51,7 @@ services:
       - app
       - redis
 
-  flower: 
+  flower:
     container_name: flower
     build: .
     command: celery -A celery_worker.celery flower --port=5555
@@ -64,3 +64,21 @@ services:
       - app
       - redis
       - celery_worker
+
+  chrome:
+        image: selenium/standalone-chrome:latest
+        hostname: chrome     
+        privileged: true
+        shm_size: 2g
+        ports:
+          - "4444:4444"
+        volumes:
+          # - /Users/arifzamri/Downloads:/home/seluser/Downloads
+          - ./tmpdownloads/:/home/seluser/Downloads
+
+  framework:
+        build: . 
+        depends_on: 
+            - chrome
+
+    

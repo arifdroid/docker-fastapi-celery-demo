@@ -2,6 +2,8 @@ import os
 import time
 from celery import Celery
 from dotenv import load_dotenv
+from chromeScraper import scraping_script
+from sampleScraperFile import download_scraping_script_demo
 
 load_dotenv(".env")
 
@@ -17,4 +19,12 @@ def create_task(a, b, c):
 
 @celery.task(name="scrape_data")
 def scrape_data():
-    return "a"
+    print("scraping 1")
+    data = scraping_script()
+    return data
+
+@celery.task(name="demo_scrape_data")
+def demo_scrape_data():
+    print("scraping demo 1")
+    data = download_scraping_script_demo()
+    return data
